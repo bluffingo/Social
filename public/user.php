@@ -4,51 +4,52 @@ namespace Social;
 
 include("../private/common.php");
 
-use BluffingoCore\CoreVersionNumber;
-use Social\VersionNumber;
+$username = ($_GET['name'] ?? null);
+
 use Social\UserData;
+
+$data = [
+    "id" => 1337,
+    "username" => $username,
+    "title" => "Social User !",
+    "customcolor" => sprintf('#%06X', mt_rand(0, 0xFFFFFF)),
+    "about" => "Lorem ipsum whatever the fuck",
+    "birthdate" => "2007-01-15",
+    "joined" => 1337420690,
+    "lastseen" => time(),
+];
+
 
 $posts = [
     1 => [
-        "id" => 1,
-        "author" => 1,
+        "id" => 4206969,
+        "author" => 1337,
         "contents" => "Hello, world!",
-        "timestamp" => 1337420690,
-    ],
-    2 => [
-        "id" => 1,
-        "author" => 59,
-        "contents" => "Check this out Y'all... IMG_3895.jpeg",
-        "timestamp" => 1666420690,
-    ],
-    3 => [
-        "id" => 3,
-        "author" => 2,
-        "contents" => "Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-        Nulla nec lorem eget mi commodo laoreet et eget risus. Donec sit amet placerat lectus. 
-        Nam cursus maximus nisi, vel fringilla lorem blandit id. Cras sit amet felis sit amet mi 
-        scelerisque iaculis. Sed metus turpis placerat.",
         "timestamp" => time(),
     ],
 ];
+
+function formatValue($key, $value)
+{
+    if (in_array($key, ['joined', 'lastseen'])) {
+        return date('Y-m-d H:i:s', $value);
+    }
+    return $value;
+}
 ?>
 <link rel="stylesheet" href="/trinium-default.css">
 <div class="page">
     <div class="page-contents">
         <div class="container">
-            <h1><?php echo (new VersionNumber())->outputVersionBanner(); ?></h1>
-            <p>Using BluffingoCore <?php echo (new CoreVersionNumber())->getVersionString(); ?></p>
-            <h2>Post message (not functional for now)</h2>
+            <h1>Social</h1>
+            <h2><?php echo $data["title"]; ?></h2>
             <div class="content-box">
-                <form action="/" method="post">
-                    <div class="form-input">
-                        <textarea class="form-submit" id=" post-content" name="content" rows="4" cols="50" maxlength="280" required></textarea>
-                    </div>
-                    <div class="form-button-container">
-                        <button type="submit" class="button button-primary">Post</button>
-                        <button type="reset" class="button button-secondary">Clear</button>
-                    </div>
-                </form>
+                <?php foreach ($data as $key => $value): ?>
+                    <li>
+                        <span class="data-key"><?= htmlspecialchars($key) ?>:</span>
+                        <span class="data-value"><?= htmlspecialchars(formatValue($key, $value)) ?></span>
+                    </li>
+                <?php endforeach; ?>
             </div>
             <hr>
             <h2>Posts</h2>

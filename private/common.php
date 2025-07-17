@@ -2,25 +2,25 @@
 
 namespace Social;
 
-define("SOCIAL_ROOT_PATH", dirname(__DIR__));
-define("SOCIAL_DYNAMIC_PATH", SOCIAL_ROOT_PATH . '/dynamic');
-define("SOCIAL_PUBLIC_PATH", SOCIAL_ROOT_PATH . '/public'); // we need this for SquareBracketTwigExtension
-define("SOCIAL_PRIVATE_PATH", SOCIAL_ROOT_PATH . '/private');
-define("SOCIAL_VENDOR_PATH", SOCIAL_ROOT_PATH . '/vendor');
-define("SOCIAL_GIT_PATH", SOCIAL_ROOT_PATH . '/.git'); // ONLY FOR makeVersionString() IN SquareBracket CLASS.
+define("BLUFF_ROOT_PATH", dirname(__DIR__));
+define("BLUFF_DYNAMIC_PATH", BLUFF_ROOT_PATH . '/dynamic');
+define("BLUFF_PUBLIC_PATH", BLUFF_ROOT_PATH . '/public'); // we need this for SquareBracketTwigExtension
+define("BLUFF_PRIVATE_PATH", BLUFF_ROOT_PATH . '/private');
+define("BLUFF_VENDOR_PATH", BLUFF_ROOT_PATH . '/vendor');
+define("BLUFF_GIT_PATH", BLUFF_ROOT_PATH . '/.git'); // ONLY FOR makeVersionString() IN SquareBracket CLASS.
 
-define("SOCIAL_CLI", false);
+define("BLUFF_CLI", false);
 
 if (version_compare(PHP_VERSION, '8.2.0') <= 0) {
     die('Social is not compatible with your PHP version. Social supports PHP 8.2 or newer.');
 }
 
 /*
-if (!file_exists(SOCIAL_VENDOR_PATH . '/autoload.php')) {
+if (!file_exists(BLUFF_VENDOR_PATH . '/autoload.php')) {
     die('The required Composer packages are missing. Please read the setup instructions in the README file.');
 }
 
-if (!file_exists(SOCIAL_PRIVATE_PATH . '/config/config.php')) {
+if (!file_exists(BLUFF_PRIVATE_PATH . '/config/config.php')) {
     die('The configuration file could not be found. Please read the setup instructions in the README file.');
 }
 */
@@ -28,8 +28,8 @@ if (!file_exists(SOCIAL_PRIVATE_PATH . '/config/config.php')) {
 spl_autoload_register(function ($class_name) {
     $class_name = str_replace('\\', '/', $class_name);
 
-    if (file_exists(SOCIAL_PRIVATE_PATH . "/class/$class_name.php")) {
-        require SOCIAL_PRIVATE_PATH . "/class/$class_name.php";
+    if (file_exists(BLUFF_PRIVATE_PATH . "/class/$class_name.php")) {
+        require BLUFF_PRIVATE_PATH . "/class/$class_name.php";
     }
 });
 
@@ -39,7 +39,7 @@ set_exception_handler(function ($exception) {
     // kinda ugly imo
     $version_number = new VersionNumber();
 
-    if (SOCIAL_CLI) {
+    if (BLUFF_CLI) {
         $errorMsg = sprintf(
             "Error: %s" . PHP_EOL .
                 "Code: %s" . PHP_EOL .

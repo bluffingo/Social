@@ -9,7 +9,7 @@ class VersionNumber
 
     public function __construct()
     {
-        $this->versionNumber = "1.3.0-beta.9";
+        $this->versionNumber = "0.0.0";
         $this->versionString = $this->makeVersionString();
     }
 
@@ -19,10 +19,10 @@ class VersionNumber
      */
     private function makeVersionString(): string
     {
-        if (file_exists(SOCIAL_GIT_PATH)) {
-            $gitHead = file_get_contents(SOCIAL_GIT_PATH . '/HEAD');
+        if (file_exists(BLUFF_GIT_PATH)) {
+            $gitHead = file_get_contents(BLUFF_GIT_PATH . '/HEAD');
             $gitBranch = rtrim(preg_replace("/(.*?\/){2}/", '', $gitHead));
-            $commit = file_get_contents(SOCIAL_GIT_PATH . '/refs/heads/' . $gitBranch); // kind of bad but hey it works
+            $commit = file_get_contents(BLUFF_GIT_PATH . '/refs/heads/' . $gitBranch); // kind of bad but hey it works
 
             $hash = substr($commit, 0, 7);
 
@@ -39,7 +39,7 @@ class VersionNumber
      */
     public function outputVersionBanner(): string
     {
-        return sprintf("OpenSB %s - Executed on %s", $this->getVersionString(), date("Y-m-d h:i:s")) . PHP_EOL;
+        return sprintf("Social %s - Executed on %s", $this->getVersionString(), date("Y-m-d h:i:s")) . PHP_EOL;
     }
 
     /**
