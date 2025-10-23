@@ -1,0 +1,16 @@
+{
+    "require": {
+        "twig/twig": "3.21.1",
+        "intervention/image": "3.11.4",
+        "erusev/parsedown": "dev-master"
+    },
+    "minimum-stability": "stable",
+    "config": {
+        "platform": {
+            "php": "8.2"
+        }
+    },
+    "require-dev": {
+        "arokettu/pseudolocale": "^1.1"
+    }
+}
