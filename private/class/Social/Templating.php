@@ -1,5 +1,25 @@
 <?php
 
+/*
+  Social
+
+  Copyright (C) 2025 Chaziz
+
+  Social is free software: you can redistribute it and/or modify it under the 
+  terms of the GNU Affero General Public License as published by the Free 
+  Software Foundation, either version 3 of the License, or (at your option) any
+  later version. 
+
+  Social is distributed in the hope that it will be useful, but WITHOUT ANY 
+  WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS 
+  FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more 
+  details.
+
+  You should have received a copy of the GNU Affero General Public License
+  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+
 namespace Social;
 
 use BluffingoCore\CoreUtilities;
@@ -109,7 +129,9 @@ class Templating
 
         $this->twig = new Environment($this->loader, ['debug' => false, 'cache' => false]);
 
-        //$this->twig->addExtension(new SquareBracketTwigExtension($sb, $this->twig));
+        $this->twig->addExtension(new SocialTwigExtension($social, $this->twig));
+        $this->twig->addExtension(new StringExtension());
+
 
         if ($social->isDebug()) {
             $this->twig->addExtension(new DebugExtension());
@@ -120,9 +142,12 @@ class Templating
             }));
         }
 
+        $branding = $social->getBrandingSettings();
+
         $this->version_number = new VersionNumber();
 
         $this->twig->addGlobal('social_version', $this->version_number->getVersionArray());
+        $this->twig->addGlobal('website_branding', $branding);
     }
 
     /**

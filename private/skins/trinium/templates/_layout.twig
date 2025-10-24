@@ -1,3 +1,9 @@
+{% set logo_suffix = current_theme starts with 'dark' ? '-dark' : '' %}
+{% set logo_extension = website_branding.is_vector ? '.svg' : '.png' %}
+{% set logo_type = website_branding.use_wordmark ? 'logo-wordmark' : 'logo' %}
+
+{% set logo = website_branding.assets_location ~ '/' ~ logo_type ~ logo_suffix ~ logo_extension %}
+
 <!DOCTYPE html>
 <html lang="{{ language_code }}" dir="ltr">
 <head>
@@ -8,7 +14,7 @@
         <div class="header-container">
             <div class="header-main">
                 <div class="header-logo">
-                    <a href="/">Social</a>
+                    <img alt="{{ website_branding.name }}" class="logo" src="{{ logo }}">
                 </div>
             </div>
         </div>

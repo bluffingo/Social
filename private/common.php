@@ -2,13 +2,6 @@
 
 namespace Social;
 
-define("BLUFF_ROOT_PATH", dirname(__DIR__));
-define("BLUFF_DYNAMIC_PATH", BLUFF_ROOT_PATH . '/dynamic');
-define("BLUFF_PUBLIC_PATH", BLUFF_ROOT_PATH . '/public'); // we need this for SquareBracketTwigExtension
-define("BLUFF_PRIVATE_PATH", BLUFF_ROOT_PATH . '/private');
-define("BLUFF_VENDOR_PATH", BLUFF_ROOT_PATH . '/vendor');
-define("BLUFF_GIT_PATH", BLUFF_ROOT_PATH . '/.git'); // ONLY FOR makeVersionString() IN SquareBracket CLASS.
-
 if (version_compare(PHP_VERSION, '8.2.0') <= 0) {
     die('Social is not compatible with your PHP version. Social supports PHP 8.2 or newer.');
 }
@@ -146,6 +139,7 @@ set_exception_handler(function ($exception) {
 
 // now initialize the social class
 $social = new Social($config);
+$database = $social->getDatabaseClass();
 
 if (!BLUFF_CLI) {
     $version_number = new VersionNumber(); // kinda ugly imo

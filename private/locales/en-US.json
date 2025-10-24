@@ -1,0 +1,16 @@
+{
+    "version_intro": "This website is powered by Social. © %s %s and other contributors.",
+    "version_agpl": "Social is free software: you can redistribute it and/or modify it under the terms of the GNU Affero General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.",
+    "version_no_warranty": "Social is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU Affero General Public License for more details.",
+    "version_license_notice": "You should have received <a href=\"%s\">a copy of the GNU Affero General Public License</a> along with this program. If not, see <a href=\"%s\">http://www.gnu.org/licenses/</a>.",
+    "version_github": "The source code to Social is available <a href=\"%s\">on GitHub</a>.",
+
+    "version": "Version",
+    "change_theme": "Change theme",
+    "help": "Help",
+    "community_guidelines": "Community Guidelines",
+    "terms_of_service": "Terms of Service",
+    "privacy_policy": "Privacy Policy",
+    "staff": "Staff",
+    "debug": "Debug"
+}
