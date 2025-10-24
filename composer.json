@@ -2,7 +2,8 @@
     "require": {
         "twig/twig": "3.21.1",
         "intervention/image": "3.11.4",
-        "erusev/parsedown": "dev-master"
+        "erusev/parsedown": "dev-master",
+        "twig/string-extra": "3.21.0"
     },
     "minimum-stability": "stable",
     "config": {

@@ -17,15 +17,13 @@ if (!file_exists(BLUFF_VENDOR_PATH . '/autoload.php')) {
     die('The required Composer packages are missing. Please read the setup instructions in the README file.');
 }
 
-/*
 if (!file_exists(BLUFF_PRIVATE_PATH . '/config/config.php')) {
     die('The configuration file could not be found. Please read the setup instructions in the README file.');
 }
-*/
 
 // TODO: add check for BluffingoCore -chaziz 07/19/2025
 
-//$config = include_once(BLUFF_PRIVATE_PATH . '/config/config.php');
+$config = include_once(BLUFF_PRIVATE_PATH . '/config/config.php');
 require_once(BLUFF_VENDOR_PATH . '/autoload.php');
 
 use Social\VersionNumber;
@@ -146,9 +144,12 @@ set_exception_handler(function ($exception) {
     }
 });
 
+// now initialize the social class
+$social = new Social($config);
+
 if (!BLUFF_CLI) {
     $version_number = new VersionNumber(); // kinda ugly imo
     header('X-Powered-By: Social ' . $version_number->getVersionString());
 
-    $twig = new Templating();
+    $twig = new Templating($social);
 }

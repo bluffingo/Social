@@ -31,9 +31,9 @@ class Templating
     private string $theme;
 
     /**
-     * @var SquareBracket The core SquareBracket class
+     * @var Social The core Social class
      */
-    //private SquareBracket $sb;
+    private Social $social;
 
     /**
      * @var Authentication The authentication class
@@ -62,9 +62,16 @@ class Templating
      *
      * @return mixed|string
      */
-    public function __construct(/*SquareBracket $sb*/)
+    public function __construct(Social $social)
     {
         chdir(BLUFF_PRIVATE_PATH);
+
+        $this->social = $social;
+        /*
+        $this->authentication = $this->social->getAuthenticationClass();
+
+        $options = $social->getLocalOptions();
+        */
 
         $default_skin = "trinium";
         $default_theme = "default";
@@ -94,7 +101,24 @@ class Templating
             $this->loader = new FilesystemLoader($templatePath);
         }
 
+        /*
+        $doCache = !$sb->isTemplateCachingEnabled() ? false : 'skins/cache/';
+
+        $this->loader->addPath('skins/common/');
+        */
+
         $this->twig = new Environment($this->loader, ['debug' => false, 'cache' => false]);
+
+        //$this->twig->addExtension(new SquareBracketTwigExtension($sb, $this->twig));
+
+        if ($social->isDebug()) {
+            $this->twig->addExtension(new DebugExtension());
+        } else {
+            $this->twig->addFunction(new TwigFunction('dump', function () {
+                trigger_error("Twig dump function called outside of debug mode!", E_USER_WARNING);
+                return "This function is not available outside of debug mode.";
+            }));
+        }
 
         $this->version_number = new VersionNumber();
 
