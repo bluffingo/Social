@@ -1,7 +1,45 @@
 {% extends "_layout.twig" %}
 
+{% if is_user_logged_in %}
+    {% set jumbotronClassName = "homepage-logged-in" %}
+{% else %}
+    {% set jumbotronClassName = "homepage-logged-out" %}
+{% endif %}
+
+{% block precontent %}
+    <div class="jumbotron page-banner homepage">
+        <div class="jumbotron-container {{ jumbotronClassName }}">
+            <div class="jumbotron-welcome">
+                {% if is_user_logged_in %}
+                    <div class="profile-picture">
+                        <img src="{{ profile_picture(user_data.name) }}" class="pfp" alt="{{ user_data.name }}">
+                    </div>
+                    <div class="jumbotron-logged-in-text">
+                        <h1>{{ localize('welcome_logged_in', user_data.title) }}</h1>
+                        <div>@{{ user_data.name }} • {{ localize('followers', user_stat_data.followers) }}
+                            • {{ localize('views', user_stat_data.views) }}</div>
+                    </div>
+                {% else %}
+                    <h1>{{ localize('welcome_logged_out', website_branding.name) }}</h1>
+                    {% if is_chaziz_sb %}
+                        <p>{{ localize('welcome_slogan') }}</p>
+                    {% endif %}
+                    <div class="jumbotron-get-started">
+                        <a href="/register" class="button button-warning">{{ localize('welcome_get_started') }}</a>
+                        <span>← {{ localize('welcome_its_free') }}</span>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="jumbotron-right-container">
+                <div class="jumbotron-right-date">
+                    {{ date() | format_date('long', 'none') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
 {% block content %}
-    <h1>Welcome to {{ website_branding.name }}!</h1>
     <div class="content-box">
         {% for post in data.posts %}
             {#{{ dump(post) }}#}

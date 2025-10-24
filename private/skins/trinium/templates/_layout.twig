@@ -8,17 +8,32 @@
 <html lang="{{ language_code }}" dir="ltr">
 <head>
     <link rel="stylesheet" href="/assets/css/trinium-default.css">
+
+    <style>
+        {# this is done through twig because css does not support string addition or whatever the FUCK its called.
+            -chaziz 2025-08-03 #}
+        :root {
+            {% if current_theme starts with 'dark' %}
+            --jumbotron: url('{{ website_branding.assets_location }}/jumbotron_background_dark.jpg');
+            {% else %}
+            --jumbotron: url('{{ website_branding.assets_location }}/jumbotron_background.jpg');
+            {% endif %}
+        }
+    </style>
 </head>
 <body>
     <div class="header">
         <div class="header-container">
             <div class="header-main">
                 <div class="header-logo">
-                    <img alt="{{ website_branding.name }}" class="logo" src="{{ logo }}">
+                    <a href="/">
+                        <img alt="{{ website_branding.name }}" class="logo" src="{{ logo }}">
+                    </a>
                 </div>
             </div>
         </div>
     </div>
+    {% block precontent %}{% endblock %}
     <div class="page">
         <div class="page-contents">
             <div class="container">
