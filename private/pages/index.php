@@ -21,12 +21,9 @@
 
 namespace Social;
 
-global $twig;
+global $twig, $database;
 
-use BluffingoCore\CoreVersionNumber;
-use Social\VersionNumber;
-use Social\UserData;
-
+/*
 $posts = [
     1 => [
         "id" => 1,
@@ -50,6 +47,9 @@ $posts = [
         "timestamp" => time(),
     ],
 ];
+*/
+
+$posts = $database->fetchArray($database->query("SELECT j.* FROM journals j ORDER BY j.timestamp DESC LIMIT 10"));
 
 $data = [
     'posts' => $posts,

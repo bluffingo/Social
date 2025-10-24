@@ -2,6 +2,12 @@
 
 {% block content %}
     <h1>Welcome to {{ website_branding.name }}!</h1>
+    <div class="content-box">
+        {% for post in data.posts %}
+            {#{{ dump(post) }}#}
+            {{ include('/components/_post.twig') }}
+        {% endfor %}
+    </div>
 {% endblock %}
 
 {#

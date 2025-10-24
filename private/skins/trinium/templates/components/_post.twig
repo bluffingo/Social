@@ -1,0 +1,48 @@
+<div class="comment" id="comment-{{ post.id }}">
+    <a href="/user/{{ post.author.info.username }}">
+        <div class="profile-picture user-id-{{ post.author.id }}">
+            <img src="{{ profile_picture(post.author.info.username) }}" class="pfp" alt="{{ post.author.info.username }}">
+        </div>
+    </a>
+    <div class="comment-body">
+        <div class="comment-author">
+            {{ user_link(post.author) }}
+            <span class="comment-timestamp" title="{{ post.posted | format_date('long', 'medium') }}">{{ post.posted | relative_time }}</span>
+        </div>
+        <div class="comment-contents">
+            {% if post.post | trim is not empty %}
+                {{ post.post | markdown_user_written }}
+            {% else %}
+                <small>Null comment</small>
+            {% endif %}
+
+            {% if post.id and is_user_logged_in %}
+            <a class="reply-button" data-comment-id="{{ post.id }}">{{ localize('reply_action') }}</a>
+            {% endif %}
+
+            <div class="replies" id="replies-{{ post.id }}">
+                {% if post.id and is_user_logged_in %}
+                    <div class="reply-form" id="reply-form-{{ post.id }}" style="display: none;">
+                        <div class="profile-picture">
+                            <img src="{{ profile_picture(user_data.name) }}" class="pfp" alt="{{ user_data.name }}">
+                        </div>
+                        <div class="new-reply-form">
+                            <textarea class="form-submit" id="reply_contents_{{ post.id }}" maxlength="1000" rows="3"></textarea>
+                            <div class="flex">
+                                <div class="text-danger" id="reply-form-error-{{ post.id }}" style="display:none;">
+                                    Reply Form Error
+                                </div>
+                                <button class="button button-primary submit-reply-button" data-comment-id="{{ post.id }}">
+                                    {{ localize('reply_action') }}
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+                {% for reply in post.replies %}
+                    {{ include('/components/_post.twig', { comment: reply }) }}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>

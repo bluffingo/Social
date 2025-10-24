@@ -24,6 +24,7 @@ namespace Social;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
+use Twig\TwigFilter;
 
 use BluffingoCore\Database;
 use BluffingoCore\Profiler;
@@ -80,6 +81,42 @@ class SocialTwigExtension extends AbstractExtension
     {
         return [
             new TwigFunction('localize', [$this, 'localize']),
+            new TwigFunction('profile_picture', function ($username) {
+                return "/assets/profiledef.svg";
+            }),
+            new TwigFunction('user_link', function ($username) {
+                return "Userlink";
+            }),
+        ];
+    }
+
+    /**
+     * function getFilters
+     *
+     * @return mixed
+     */
+    public function getFilters()
+    {
+        return [
+            new TwigFilter('relative_time', function ($time) {
+                $localization = $this->social->getLocalizationClass();
+                return $localization->formatRelativeTime($time);
+            }, ['is_safe' => ['html']]),
+
+            new TwigFilter('format_date', function ($date, $dateFormat = 'medium', $timeFormat = 'medium', $pattern = null) {
+                $localization = $this->social->getLocalizationClass();
+                return $localization->formatDate($date, $dateFormat, $timeFormat, $pattern);
+            }, ['is_safe' => ['html']]),
+
+            new TwigFilter('format_number', function ($number) {
+                $localization = $this->social->getLocalizationClass();
+                return $localization->formatNumber($number);
+            }, ['is_safe' => ['html']]),
+
+            // placeholder
+            new TwigFilter('markdown_user_written', function ($text, $enableHeaders = false) {
+                return $text;
+            }, ['is_safe' => ['html']]),
         ];
     }
 

@@ -127,7 +127,7 @@ class Templating
         $this->loader->addPath('skins/common/');
         */
 
-        $this->twig = new Environment($this->loader, ['debug' => false, 'cache' => false]);
+        $this->twig = new Environment($this->loader, ['debug' => $social->isDebug(), 'cache' => false]);
 
         $this->twig->addExtension(new SocialTwigExtension($social, $this->twig));
         $this->twig->addExtension(new StringExtension());
