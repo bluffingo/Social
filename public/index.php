@@ -31,52 +31,11 @@ $posts = [
         "timestamp" => time(),
     ],
 ];
-?>
-<link rel="stylesheet" href="/trinium-default.css">
-<div class="page">
-    <div class="page-contents">
-        <div class="container">
-            <h1><?php echo (new VersionNumber())->outputVersionBanner(); ?></h1>
-            <p>Using BluffingoCore <?php echo (new CoreVersionNumber())->getVersionString(); ?></p>
-            <h2>Post message (not functional for now)</h2>
-            <div class="content-box">
-                <form action="/" method="post">
-                    <div class="form-input">
-                        <textarea class="form-submit" id=" post-content" name="content" rows="4" cols="50" maxlength="280" required></textarea>
-                    </div>
-                    <div class="form-button-container">
-                        <button type="submit" class="button button-primary">Post</button>
-                        <button type="reset" class="button button-secondary">Clear</button>
-                    </div>
-                </form>
-            </div>
-            <hr>
-            <h2>Posts</h2>
-            <div class="content-box">
-                <?php foreach ($posts as $post): ?>
-                    <?php $user = new UserData($post['author'])->getUserArray(); ?>
-                    <div class="comment">
-                        <a href="/user.php?name=<?php echo $user["username"]; ?>">
-                            <div class="profile-picture">
-                                <img src="pfp.png" class="pfp" alt="<?php echo $user["username"]; ?>">
-                            </div>
-                        </a>
-                        <div class="comment-body">
-                            <div class="comment-author">
-                                <div class="comment-author">
-                                    <div class="userlink">
-                                        <a style="color:<?php echo $user["color"]; ?>;" href="/user.php?name=<?php echo $user["username"]; ?>"><?php echo $user["username"]; ?></a>
-                                    </div>
-                                    <span class="comment-timestamp"><?php echo date('Y-m-d H:i:s', $post['timestamp']); ?></span>
-                                </div>
-                            </div>
-                            <div class="comment-contents">
-                                <?php echo htmlspecialchars($post['contents']); ?>
-                            </div>
-                        </div>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        </div>
-    </div>
-</div>
+
+$data = [
+    'posts' => $posts,
+];
+
+echo $twig->render('index.twig', [
+    'data' => $data,
+]);

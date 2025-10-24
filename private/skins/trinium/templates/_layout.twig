@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="{{ language_code }}" dir="ltr">
+<head>
+    <link rel="stylesheet" href="/assets/css/trinium-default.css">
+</head>
+<body>
+    <div class="header">
+        <div class="header-container">
+            <div class="header-main">
+                <div class="header-logo">
+                    <a href="/">Social</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page">
+        <div class="page-contents">
+            <div class="container">
+                {% block content %}{% endblock %}
+            </div>
+        </div>
+    </div>
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-powered-by">
+                <span>Powered by <a href="/version">Social {{ social_version.name }} {{ social_version.number }}</a></span>
+            </div>
+            <div class="footer-links">
+                {#{% for link in footer_links() %}
+                    <span><a href="{{ link.url }}">{{ link.name }}</a></span>
+                {% endfor %}#}
+            </div>
+            <div class="footer-copyright">
+                <span>© {{ ('now' | date('Y')) }} Bluffingo Development</span>
+            </div>
+            {% if is_debug %}
+                <div>
+                    <a class="button button-danger button-small" id="debug-button">Debug</a>
+                </div>
+            {% endif %}
+        </div>
+    </footer>
+</body>
+</html>

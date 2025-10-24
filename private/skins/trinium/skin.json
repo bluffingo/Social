@@ -1,0 +1,35 @@
+{
+    "metadata": {
+        "id": "trinium",
+        "name": "Trinium",
+        "author": "Bluffingo Development",
+        "description": "The new default look of OpenSB.",
+        "site": "social",
+        "themes": [
+            {
+                "id": "default",
+                "name": "Light (Glossy)",
+                "description": "The default user experience.",
+                "author": "Bluffingo Development"
+            },
+            {
+                "id": "dark",
+                "name": "Dark (Glossy)",
+                "description": "The dark theme.",
+                "author": "Bluffingo Development"
+            },
+            {
+                "id": "default-flat",
+                "name": "Light (Matte)",
+                "description": "The default user experience, but it's flat.",
+                "author": "Bluffingo Development"
+            },
+            {
+                "id": "dark-flat",
+                "name": "Dark (Matte)",
+                "description": "The dark theme, but it's flat.",
+                "author": "Bluffingo Development"
+            }
+        ]
+    }
+}

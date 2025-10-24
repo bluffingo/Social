@@ -2,47 +2,120 @@
 
 namespace Social;
 
+use BluffingoCore\GitInfo;
+use Exception;
+
+/**
+ * class VersionNumber
+ * 
+ * This class generates Social's version number.
+ * 
+ * @since Social 1.0.0
+ */
 class VersionNumber
 {
-    private string $versionNumber;
+    /**
+     * @var string The version name,
+     */
+    private string $versionName = "Brightney";
+
+    /**
+     * @var string The version number, which tries to follow Semantic versioning.
+     */
+    private string $versionNumber = "1.0.0-dev";
+
+    /**
+     * @var string The full complete version string.
+     */
     private string $versionString;
 
+    /**
+     * function __construct
+     *
+     * @return void
+     */
     public function __construct()
     {
-        $this->versionNumber = "0.0.0";
         $this->versionString = $this->makeVersionString();
     }
 
     /**
-     * Make OpenSB's version number.
+     * function makeVersionString
      *
+     * Makes the version string.
+     *
+     * @return string
      */
     private function makeVersionString(): string
     {
-        if (file_exists(BLUFF_GIT_PATH)) {
-            $gitHead = file_get_contents(BLUFF_GIT_PATH . '/HEAD');
-            $gitBranch = rtrim(preg_replace("/(.*?\/){2}/", '', $gitHead));
-            $commit = file_get_contents(BLUFF_GIT_PATH . '/refs/heads/' . $gitBranch); // kind of bad but hey it works
+        try {
+            $gitInfo = new GitInfo();
 
-            $hash = substr($commit, 0, 7);
+            $branch = $gitInfo->getGitBranch();
+            $hash = $gitInfo->getGitCommitHash();
 
-            return sprintf('%s.%s-%s', $this->versionNumber, $gitBranch, $hash);
-        } else {
+            /*
+            // if for example, the version number is opensb 2.0 and we're on 
+            // the opensb-2.0 branch, we don't need to show the git branch as 
+            // it would just repeat itself.
+            if (preg_match('/^(\d+\.\d+)/', $this->versionNumber, $matches)) {
+                $majorMinor = $matches[1];
+
+                if (str_starts_with($branch, 'opensb-' . $majorMinor)) {
+                    return sprintf('%s-%s', $this->versionNumber, $hash);
+                }
+            }
+            */
+
+            return sprintf('%s.%s-%s', $this->versionNumber, $branch, $hash);
+        } catch (Exception) {
             return $this->versionNumber;
         }
     }
 
     /**
-     * Outputs a version banner.
+     * function outputVersionBanner
+     *
+     * Outputs the version banner, typically used in logs.
      *
      * @return string
      */
     public function outputVersionBanner(): string
     {
-        return sprintf("Social %s - Executed on %s", $this->getVersionString(), date("Y-m-d h:i:s")) . PHP_EOL;
+        return sprintf("Social %s %s - Executed on %s", $this->getVersionName(), $this->getVersionString(), date("Y-m-d h:i:s")) . PHP_EOL;
     }
 
     /**
+     * function getVersionArray
+     *
+     * Returns a version array intended for the frontend.
+     *
+     * @return array
+     */
+    public function getVersionArray(): array
+    {
+        return [
+            "name" => $this->versionName,
+            "number" => $this->versionNumber,
+            "string" => $this->versionString,
+        ];
+    }
+
+    /**
+     * function getVersionName
+     *
+     * Returns the version name.
+     *
+     * @return string
+     */
+    public function getVersionName(): string
+    {
+        return $this->versionName;
+    }
+
+    /**
+     * function getVersionNumber
+     *
      * Returns the version number.
      *
      * @return string
@@ -53,6 +126,8 @@ class VersionNumber
     }
 
     /**
+     * function getVersionString
+     *
      * Returns the version string.
      *
      * @return string

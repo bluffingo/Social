@@ -17,7 +17,7 @@ dynamic/emojis/
 
 ## Site-specific branding
 public/assets/*_branding/
-!public/assets/sb_branding/
+!public/assets/qb_branding/
 
 !*.txt
 
